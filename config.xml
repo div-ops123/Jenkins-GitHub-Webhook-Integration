@@ -1,0 +1,39 @@
+<project>
+    <actions/>
+    <description>GitHub Webhook Integration Pipeline</description>
+    <scm class="hudson.plugins.git.GitSCM">
+	<userRemoteConfigs>
+	   <hudson.plugins.git.UserRemoteConfig>
+	      <url>https://github.com/div-ops123/Jenkins-GitHub-Webhook-Integration.git</url>
+	   </hudson.plugins.git.UserRemoteConfig>
+	</userRemoteConfigs>
+	<branches>
+	   <hudson.plugins.git.BranchSpec>
+	      <name>*/main</name>
+	   </hudson.plugins.git.BranchSpec>
+	</branches>
+    </scm>
+    <triggers>
+       <com.cloudbees.jenkins.GitHubPushTrigger>
+          <spec></spec>
+       </com.cloudbees.jenkins.GitHubPushTrigger>
+    </triggers>
+    <concurrentBuild>false</concurrentBuild>
+    <builders>
+       <hudson.plugins.workflow.cps.CpsScmFlowDefinition>
+          <scm class="hudson.plugins.git.GitSCM" plugin="git@4.14.2">
+	     <userRemoteConfigs>
+		<hudson.plugins.git.UserRemoteConfig>
+		   <url>https://github.com/div-ops123/Jenkins-GitHub-Webhook-Integration.git</url>
+		</hudson.plugins.git.UserRemoteConfig>
+	     </userRemoteConfigs>
+	     <branches>
+		<hudson.plugins.git.BranchSpec>
+		   <name>*/main</name>
+		</hudson.plugins.git.BranchSpec>
+	     </branches>
+          </scm>
+	  <scriptPath>Jenkinsfile</scriptPath>
+       </hudson.plugins.workflow.cps.CpsScmFlowDefinition>
+    </builders>
+</project>
