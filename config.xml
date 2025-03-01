@@ -1,39 +1,27 @@
-<project>
+<flow-definition plugin="workflow-job@1505.vea_4b_20a_4a_495">
     <actions/>
     <description>GitHub Webhook Integration Pipeline</description>
-    <scm class="hudson.plugins.git.GitSCM">
-	<userRemoteConfigs>
-	   <hudson.plugins.git.UserRemoteConfig>
-	      <url>https://github.com/div-ops123/Jenkins-GitHub-Webhook-Integration.git</url>
-	   </hudson.plugins.git.UserRemoteConfig>
-	</userRemoteConfigs>
-	<branches>
-	   <hudson.plugins.git.BranchSpec>
-	      <name>*/main</name>
-	   </hudson.plugins.git.BranchSpec>
-	</branches>
-    </scm>
+    <keepDependencies>false</keepDependencies>
+    <properties/>
+    <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@4032.vf3248d9c3fee">
+	<scm class="hudson.plugins.git.GitSCM" plugin="git@5.7.0">
+           <userRemoteConfigs>
+              <hudson.plugins.git.UserRemoteConfig>
+                 <url>https://github.com/div-ops123/Jenkins-GitHub-Webhook-Integration.git</url>
+              </hudson.plugins.git.UserRemoteConfig>
+           </userRemoteConfigs>
+           <branches>
+              <hudson.plugins.git.BranchSpec>
+                 <name>*/main</name>
+              </hudson.plugins.git.BranchSpec>
+           </branches>
+	</scm>
+	<scriptPath>Jenkinsfile</scriptPath>
+    </definition>
     <triggers>
        <com.cloudbees.jenkins.GitHubPushTrigger>
           <spec></spec>
        </com.cloudbees.jenkins.GitHubPushTrigger>
     </triggers>
     <concurrentBuild>false</concurrentBuild>
-    <builders>
-       <hudson.plugins.workflow.cps.CpsScmFlowDefinition>
-          <scm class="hudson.plugins.git.GitSCM" plugin="git@4.14.2">
-	     <userRemoteConfigs>
-		<hudson.plugins.git.UserRemoteConfig>
-		   <url>https://github.com/div-ops123/Jenkins-GitHub-Webhook-Integration.git</url>
-		</hudson.plugins.git.UserRemoteConfig>
-	     </userRemoteConfigs>
-	     <branches>
-		<hudson.plugins.git.BranchSpec>
-		   <name>*/main</name>
-		</hudson.plugins.git.BranchSpec>
-	     </branches>
-          </scm>
-	  <scriptPath>Jenkinsfile</scriptPath>
-       </hudson.plugins.workflow.cps.CpsScmFlowDefinition>
-    </builders>
-</project>
+</flow-definition>
