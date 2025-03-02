@@ -32,7 +32,7 @@ pipeline {
 
   post {
     always {
-       telegramSend("Build #${env.BUILD_NUMBER} started for ${env.JOB_NAME}")
+      telegramSend("Build #${env.BUILD_NUMBER} started for ${env.JOB_NAME}")
     }
     success {
       telegramSend("Build #${env.BUILD_NUMBER} succeeded for ${env.JOB_NAME}: ${env.BUILD_URL}")
