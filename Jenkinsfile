@@ -31,13 +31,16 @@ pipeline {
   }
 
   post {
+    always {
+       telegramSend("Build #${env.BUILD_NUMBER} started for ${env.JOB_NAME}")
+    }
     success {
+      telegramSend("Build #${env.BUILD_NUMBER} succeeded for ${env.JOB_NAME}: ${env.BUILD_URL}")
       echo 'Success.'
-      echo 'Send status Success to Mail, Telegram, Slack...'
     }
     failure {
+      telegramSend("Build #${env.BUILD_NUMBER} failed for ${env.JOB_NAME}: ${env.BUILD_URL}")
       echo 'Failure.'
-      echo 'Send status Failure to Mail, Telegram, Slack...'
     }
   }
 }
