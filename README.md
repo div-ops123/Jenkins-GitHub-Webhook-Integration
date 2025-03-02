@@ -15,7 +15,7 @@ Hi! I’m documenting how I set up my Jenkins pipeline to integrate with GitHub 
 ---
 
 ## Step 1: Initial Job Setup with `config.xml`
-I started by setting up my Jenkins job manually using a `config.xml` file because I wanted precise control over the initial configuration. Here’s how I did it:
+I started by setting up my Jenkins job programmatically using a `config.xml` file because I wanted precise control over the initial configuration. Here’s how I did it:
 
 1. I wrote a basic `config.xml` file. 
 
@@ -39,7 +39,7 @@ curl -X POST -u <your_username>:<your_token> -H "Jenkins-Crumb:<crumb>" -H "Cont
  - In the Jenkins UI, confirm the job was created.
  - Push a commit to your repo main branch, confirm job build in Jenkins UI.   
 
-Using `config.xml` to create the Jenkins job helps for automation and replication across evironments, without clicking through the UI.
+**Using `config.xml` to create the Jenkins job helps for automation and replication across evironments, without clicking through the UI.**
 
 ---
 
