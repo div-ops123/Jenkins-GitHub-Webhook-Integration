@@ -2,6 +2,12 @@ pipeline {
   agent any
 
   stages {
+    stage('Test') {
+      steps {
+        telegramSend("Test message")
+      }
+    }
+    
     stage('Start') {
        steps {
          telegramSend("Build #${env.BUILD_NUMBER} started for ${env.JOB_NAME}")
