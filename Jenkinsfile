@@ -16,7 +16,7 @@ pipeline {
       }
     }
     
-//    stage('Start') {
+//    stage('Start') { 
 //       steps {
 //         telegramSend("Build #${env.BUILD_NUMBER} started for ${env.JOB_NAME}")
 //       }
