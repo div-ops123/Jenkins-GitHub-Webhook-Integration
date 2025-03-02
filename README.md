@@ -1,7 +1,7 @@
 
 # Jenkins-GitHub-Telegram Integration
 
-Hi! I’m documenting how I set up my Jenkins pipeline to integrate with GitHub and send build status notifications to my Telegram account. This is my step-by-step process, including how I used `config.xml` to configure the job initially, connected it to my GitHub repo, and added Telegram notifications. Feel free to follow along if you’re setting up something similar!
+Hi! I’m documenting how I set up my Jenkins pipeline to integrate with GitHub and send build status notifications to my Telegram account. This is my step-by-step process, including how I used `config.xml` to configure the job initially, connected it to my GitHub repo, and added Telegram notifications. Feel free to follow along if you’re setting up something similar! 
 
 ---
 
