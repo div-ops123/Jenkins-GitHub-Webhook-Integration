@@ -9,8 +9,10 @@ pipeline {
 
   stages {
     stage('Test Telegram Send') {
-      script {
-         sh "curl -X POST -H 'Content-Type: application/json' -d '{\"chat_id\":${CHAT_ID}, \"text\": \"Pipeline started!\", \"disable_notification\": false}' https://api.telegram.org/bot${TOKEN}/sendMessage"
+      steps {
+         script {
+            sh "curl -X POST -H 'Content-Type: application/json' -d '{\"chat_id\":${CHAT_ID}, \"text\": \"Pipeline started!\", \"disable_notification\": false}' https://api.telegram.org/bot${TOKEN}/sendMessage"
+         }
       }
     }
     
