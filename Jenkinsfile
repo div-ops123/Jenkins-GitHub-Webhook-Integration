@@ -2,6 +2,12 @@ pipeline {
   agent any
 
   stages {
+    stage('Start') {
+       steps {
+         telegramSend("Build #${env.BUILD_NUMBER} started for ${env.JOB_NAME}")
+       }
+    }
+
     stage('Pre-Build') {
       steps {
         echo 'Pre Build...'
@@ -31,9 +37,6 @@ pipeline {
   }
 
   post {
-    always {
-      telegramSend("Build #${env.BUILD_NUMBER} started for ${env.JOB_NAME}")
-    }
     success {
       telegramSend("Build #${env.BUILD_NUMBER} succeeded for ${env.JOB_NAME}: ${env.BUILD_URL}")
       echo 'Success.'
