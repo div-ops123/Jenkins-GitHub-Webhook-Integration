@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   stages {
-    stage('Test') {
+    stage('Test Telegram Send') {
       steps {
         telegramSend("Test message")
       }
