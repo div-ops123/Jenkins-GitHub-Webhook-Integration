@@ -5,27 +5,27 @@ pipeline {
     // Telegram configuration
     TOKEN = credentials('telegram-credentials')
     CHAT_ID = credentials('telegram-chatid')
+    
+    // Telegram message pre-build
+    CURRENT_BUILD_NUMBER = "${currentBuild.number}"
+    GIT_MESSAGE = sh(returnStdout: true, script: "git log -n 1 --format=%s ${GIT_COMMIT}").trim()
+    GIT_AUTHOR = sh(returnStdout: true, script: "git log -n 1 --format=%ae ${GIT_COMMIT}").trim()
+    GIT_COMMIT_SHORT = sh(returnStdout: true, script: "git rev-parse --short ${GIT_COMMIT}").trim()
+    GIT_INFO = "Branch(Version): ${GIT_BRANCH}\nLast Message: ${GIT_MESSAGE}\nAuthor: ${GIT_AUTHOR}\nCommit: ${GIT_COMMIT_SHORT}"
+    TEXT_BREAK = "--------------------------------------------------------------"
+    TEXT_PRE_BUILD = "${TEXT_BREAK}\n${GIT_INFO}\n${JOB_NAME} is Building..."
+
+    // Telegram Message Success and Failure
+    TEXT_SUCCESS_BUILD = "'${JOB_NAME}' Build Job Successful."
+    TEXT_FAILURE_BUILD = "'${JOB_NAME}' Build Job Failed."
   }
 
+
   stages {
-    stage('Test Telegram Send') {
-      steps {
-         script {
-            sh "curl -X POST -H 'Content-Type: application/json' -d '{\"chat_id\":${CHAT_ID}, \"text\": \"Pipeline started!\", \"disable_notification\": false}' https://api.telegram.org/bot${TOKEN}/sendMessage"
-         }
-      }
-    }
-    
-//    stage('Start') { 
-//       steps {
-//         telegramSend("Build #${env.BUILD_NUMBER} started for ${env.JOB_NAME}")
-//       }
-//    }
 
     stage('Pre-Build') {
       steps {
-        echo 'Pre Build...'
-        echo 'Sending status pre-build to Mail, telegram, slack, ...'
+        sh "curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_PRE_BUILD}' --form chat_id='${CHAT_ID}'"
       }
     }
 
@@ -52,14 +52,11 @@ pipeline {
 
   post {
     success {
-//      telegramSend("Build #${env.BUILD_NUMBER} succeeded for ${env.JOB_NAME}: ${env.BUILD_URL}")
-       sh "curl -X POST -H 'Content-Type: application/json' -d '{\"chat_id\":${CHAT_ID}, \"text\": \"Pipeline succeeded!\", \"disable_notification\": false}' https://api.telegram.org/bot${TOKEN}/sendMessage"
-       echo 'Success.'
+       sh "curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_SUCCESS_BUILD}' --form chat_id='${CHAT_ID}'"
     }
+
     failure {
-//      telegramSend("Build #${env.BUILD_NUMBER} failed for ${env.JOB_NAME}: ${env.BUILD_URL}")
-       sh "curl -X POST -H 'Content-Type: application/json' -d '{\"chat_id\":${CHAT_ID}, \"text\": \"Pipeline failed!\", \"disable_notification\": false}' https://api.telegram.org/bot${TOKEN}/sendMessage"
-       echo 'Failure.'
+       sh "curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_FAILURE_BUILD}' --form chat_id='${CHAT_ID}'"
     }
   }
 }
